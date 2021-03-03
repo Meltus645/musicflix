@@ -18,4 +18,6 @@ volume_label.grid(sticky="N", row =5);
 Button(master, text="select song", font=("Calibri",12),).grid(sticky="N", row=2)
 Button(master, text="Resume", font=("Calibri",12),).grid(sticky="W", row=3)
 Button(master, text="Pause", font=("Calibri",12),).grid(sticky="E", row=3)
+Button(master, text="-", font=("Calibri",15),).grid(sticky="W", row=5)
+Button(master, text="+", font=("Calibri",15),).grid(sticky="E", row=5)
 master.mainloop()
