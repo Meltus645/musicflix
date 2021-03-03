@@ -36,6 +36,20 @@ def volume_down():
 		song_title.config(fg="red", text="No track selected")
 		print(e)
 
+def volume_up():
+	try:
+		global play_volume
+		if play_volume >=1:
+			volume_label.config(font=("Calibri",12), fg="red", text="Max")
+			return
+		play_volume =play_volume +float(0.1)
+		play_volume =round(play_volume,1)
+		mixer.music.set_volume(play_volume)
+		volume_label.config(font=("Calibri",12), fg="green", text=str(play_volume))
+	except Exception as e:
+		song_title.config(fg="red", text="No track selected")
+		print(e)
+
 # screen 
 master =Tk()
 master.title("Musiflix Player")
@@ -54,6 +68,6 @@ Button(master, text="select song", font=("Calibri",12), command=select_track).gr
 Button(master, text="Resume", font=("Calibri",12)).grid(sticky="W", row=3)
 Button(master, text="Pause", font=("Calibri",12)).grid(sticky="E", row=3)
 Button(master, text="-", font=("Calibri",12),width=5,command=volume_down).grid(sticky="W", row=5)
-Button(master, text="+", font=("Calibri",12),width=5).grid(sticky="E", row=5)
+Button(master, text="+", font=("Calibri",12),width=5,command=volume_up).grid(sticky="E", row=5)
 
 master.mainloop()
