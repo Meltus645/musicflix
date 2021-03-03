@@ -1,8 +1,7 @@
 #libs 
 import os
 from pygame import mixer
-import tkinter as tk
-from tkinter import  Tk, Label, Button, filedialog,PhotoImage
+from tkinter import  Tk,Frame, Label, Button, filedialog,PhotoImage
 import pickle
 
 play_volume =float(0.5)
@@ -66,10 +65,18 @@ def resume():
 		print(e)
 		song_title.config(fg="red", text="No track selected")
 # screen 
-master =Tk()
-master.title("Musiflix Player")
+root =Tk()
+root.geometry("600x400")
+root.title("Musiflix Player")
 
+class Player(Frame):
+	def __init__(self,master):
+		super().__init__(master)
+		self.master =master
+		self.pack()
+		self.playlist =[]
 #labels
+"""
 Label(master, text="Music Player", font=("Calibri", 15), fg="red").grid(sticky="N", row=0,padx=120)
 Label(master, text="Please select a track", font=("Calibri", 12), fg="blue").grid(sticky="N", row=1,padx=120)
 Label(master, text="Volume", font =("Calibri",12),fg="red").grid(sticky="N", row=4)
@@ -84,5 +91,6 @@ Button(master, text="Resume", font=("Calibri",12),command =resume).grid(sticky="
 Button(master, text="Pause", font=("Calibri",12),command =pause).grid(sticky="E", row=3)
 Button(master, text="-", font=("Calibri",12),width=5,command=volume_down).grid(sticky="W", row=5)
 Button(master, text="+", font=("Calibri",12),width=5,command=volume_up).grid(sticky="E", row=5)
-
-master.mainloop()
+"""
+player =Player(master=root)
+root.mainloop()
