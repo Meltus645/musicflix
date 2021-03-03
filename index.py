@@ -3,15 +3,26 @@ from tkinter import  Tk, Label, Button, filedialog
 
 default_volume =float(0.5)
 
-# callbacks
+# commands
 def select_track():
 	filename =filedialog.askopenfilename(initialdir="C:/", title ="Please select a song")
 	selected_track =filename
 	track_title =filename.split("/")
 	track_title =track_title[-1]
 
-# screen 
+	try:
+		mixer.init()
+		mixer.music.load(selected_track)
+		mixer.music.set_volume(default_volume)
+		mixer.music.play()
+		song_title.config(fg="green", text=str(track_title))
+		volume_label.config(fg="green", text=str(default_volume))
+	except Exception as e:
+		print(e)
+		song_title.config(fg="red", text="Error, playing track")
+		pass
 
+# screen 
 master =Tk()
 master.title("Musiflix Player")
 
@@ -30,4 +41,5 @@ Button(master, text="Resume", font=("Calibri",12)).grid(sticky="W", row=3)
 Button(master, text="Pause", font=("Calibri",12)).grid(sticky="E", row=3)
 Button(master, text="-", font=("Calibri",12),width=5).grid(sticky="W", row=5)
 Button(master, text="+", font=("Calibri",12),width=5).grid(sticky="E", row=5)
+
 master.mainloop()
