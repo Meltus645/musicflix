@@ -1,7 +1,7 @@
 from pygame import mixer
 from tkinter import  Tk, Label, Button, filedialog
 
-default_volume =float(0.5)
+play_volume =float(0.5)
 
 # commands
 def select_track():
@@ -13,14 +13,28 @@ def select_track():
 	try:
 		mixer.init()
 		mixer.music.load(selected_track)
-		mixer.music.set_volume(default_volume)
+		mixer.music.set_volume(play_volume)
 		mixer.music.play()
 		song_title.config(fg="green", text=str(track_title))
-		volume_label.config(fg="green", text=str(default_volume))
+		volume_label.config(fg="green", text=str(play_volume))
 	except Exception as e:
 		print(e)
 		song_title.config(fg="red", text="Error, playing track")
 		pass
+
+def volume_down():
+	try:
+		global play_volume
+		if play_volume <=0:
+			volume_label.config(font=("Calibri",12), fg="grey", text="Muted")
+			return
+		play_volume =play_volume -float(0.1)
+		play_volume =round(play_volume,1)
+		mixer.music.set_volume(play_volume)
+		volume_label.config(font=("Calibri",12), fg="green", text=str(play_volume))
+	except Exception as e:
+		song_title.config(fg="red", text="No track selected")
+		print(e)
 
 # screen 
 master =Tk()
@@ -39,7 +53,7 @@ volume_label.grid(sticky="N", row =5);
 Button(master, text="select song", font=("Calibri",12), command=select_track).grid(sticky="N", row=2)
 Button(master, text="Resume", font=("Calibri",12)).grid(sticky="W", row=3)
 Button(master, text="Pause", font=("Calibri",12)).grid(sticky="E", row=3)
-Button(master, text="-", font=("Calibri",12),width=5).grid(sticky="W", row=5)
+Button(master, text="-", font=("Calibri",12),width=5,command=volume_down).grid(sticky="W", row=5)
 Button(master, text="+", font=("Calibri",12),width=5).grid(sticky="E", row=5)
 
 master.mainloop()
