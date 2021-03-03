@@ -1,7 +1,7 @@
 #libs 
 import os
 from pygame import mixer
-from tkinter import  Tk,Frame, Label, Button, filedialog,PhotoImage
+from tkinter import  Tk, Frame, LabelFrame, GROOVE,Label, Button, filedialog,PhotoImage
 import pickle
 
 play_volume =float(0.5)
@@ -75,6 +75,21 @@ class Player(Frame):
 		self.master =master
 		self.pack()
 		self.playlist =[]
+		self.model_frame()
+	def model_frame(self):
+		self.frame_model =LabelFrame(self,
+				text="Track Hits",
+				font =("times new roman",15,"bold"),
+				bg ="dodgerblue",
+				fg ="white",
+				bd =0,
+				relief =GROOVE
+			)
+		self.frame_model.configure(
+				width =410,
+				height =300
+			)
+		self.frame_model.grid(row=0, column=0)
 #labels
 """
 Label(master, text="Music Player", font=("Calibri", 15), fg="red").grid(sticky="N", row=0,padx=120)
