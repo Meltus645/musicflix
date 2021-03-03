@@ -77,47 +77,43 @@ class Player(Frame):
 		self.playlist =[]
 		self.model_frame()
 	def model_frame(self):
-		self.frame_model =LabelFrame(self,
+		self.track =LabelFrame(self,
 				text="Track Hits",
 				font =("times new roman",15,"bold"),
 				bg ="dodgerblue",
 				fg ="white",
-				bd =0,
 				relief =GROOVE
 			)
-		self.frame_model.configure(
+		self.track.configure(
 				width =410,
 				height =300
 			)
-		self.frame_model.grid(row=0, column=0)
+		self.track.grid(row=0, column=0)
 
 		self.tracklist =LabelFrame(self,
-				text=f"Playlist {len(self.playlist)}",
+				text=f"Playlist  {len(self.playlist)}",
 				font =("times new roman",15,"bold"),
 				bg ="red",
 				fg ="white",
-				bd =0,
 				relief =GROOVE
 			)
 		self.tracklist.configure(
-				width =410,
-				height =300
+				width =190,
+				height =400
 			)
 		self.tracklist.grid(row=0, column=1,rowspan=3)
 
 		self.controls =LabelFrame(self,
-				text="Track Hits",
 				font =("times new roman",15,"bold"),
-				bg ="dodgerblue",
+				bg ="white",
 				fg ="white",
-				bd =0,
 				relief =GROOVE
 			)
 		self.controls.configure(
 				width =410,
-				height =300
+				height =100
 			)
-		self.controls.grid(row=0, column=0)
+		self.controls.grid(row=1, column=0,pady=5,padx=10)
 #labels
 """
 Label(master, text="Music Player", font=("Calibri", 15), fg="red").grid(sticky="N", row=0,padx=120)
