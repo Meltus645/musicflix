@@ -1,7 +1,7 @@
 #libs 
 import os
 from pygame import mixer
-from tkinter import  Tk, Frame, LabelFrame, GROOVE,Label, Button, filedialog,PhotoImage
+from tkinter import  Tk, Frame, LabelFrame, GROOVE,Label, Button, filedialog,PhotoImage,DoubleVar, Scale, HORIZONTAL
 import pickle
 
 play_volume =float(0.5)
@@ -137,11 +137,11 @@ class Player(Frame):
 	def controls_widget(self):
 		self.tracklister =Button(self.controls, 
 			font =("times new roman",15,"bold"),
-			bg="teal", fg ="white", padx =10, pady =1,
+			bg="white", fg ="dodgerblue", padx =10,
 			command =select_track
 			)
 		self.tracklister['text'] ="Load tracks"
-		self.tracklister.grid(row =0,column =0)
+		self.tracklister.grid(row =0,column =0,padx=10)
 
 		self.prevbutton =Button(self.controls,image =prev_icon)
 		self.prevbutton.grid(row =0,column =1)
@@ -151,6 +151,12 @@ class Player(Frame):
 
 		self.nextbutton =Button(self.controls,image =next_icon)
 		self.nextbutton.grid(row =0,column =3)
+
+		self.volume =DoubleVar()
+		self.slider =Scale(self.controls, from_ =0, to =10, orient =HORIZONTAL)
+		self.slider['variable'] =self.volume
+		self.slider.set(3)
+		self.slider.grid(row =0, column=4,padx=10)
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
