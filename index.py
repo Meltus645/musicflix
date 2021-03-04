@@ -58,7 +58,7 @@ class Player(Frame):
 		self.master =master
 		self.pack()
 		if os.path.exists("tracks.pickle"):
-			with open ("tracks.picke", "r") as f:
+			with open ("tracks.pickle", "r") as f:
 				self.playlist =pickle.load(f)
 		else:
 			self.playlist =[]
@@ -173,7 +173,7 @@ class Player(Frame):
 				if os.path.splitext(file)[1] =='.mp3':
 					path =(rooot + '/' + file).replace('\\','/')
 					self.tunes.append(path)
-		with open("activity.pickle", "wb") as f:
+		with open("tracks.pickle", "wb") as f:
 			pickle.dump(self.tunes, f) 
 		self.playlist =self.tunes
 		self.listtitle['text'] =f"Playlist:  {len(self.playlist)}"
