@@ -135,6 +135,7 @@ class Player(Frame):
 			yscrollcommand =self.scrollbar.set, selectbackground ="sky blue")
 		self.track_listing()
 		self.list.config(height =22)
+		self.list.bind('<Double-1>', self.play_track)
 		self.scrollbar.config(command =self.list.yview)
 		self.list.grid(row=2, column=0, rowspan =5)
 
@@ -186,6 +187,15 @@ class Player(Frame):
 		self.listtitle['text'] =f"Playlist:  {len(self.playlist)}"
 		self.list.delete(0, END)
 		self.track_listing()
+
+	def play_track(self, event =None):
+		if event is not None:
+			self.track_index =self.list.curselection()[0]
+		for i in range(len(self.playlist)):
+			self.list.itemconfigure(i,bg="white")
+		mixer.music.load(self.playlist[self.track_index])
+		mixer.music.play()
+
 		"""
 		selected_track =filename
 		track_title =filename.split("/")
