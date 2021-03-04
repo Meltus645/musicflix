@@ -123,14 +123,14 @@ class Player(Frame):
 		self.canvas.configure(width =400, height =240)
 		self.canvas.grid(row =1,column =0)
 
-		self.canvas =Label(self.track,font =("Calibri",12),bg="white", fg ="dodgerblue")
-		self.canvas['text'] ="Musicflix mp3 super Player"; 
-		self.canvas.configure(width =50, height =2)
+		self.canvas =Label(self.track,font =("Calibri",13),bg="white", fg ="dodgerblue")
+		self.canvas['text'] ="Musicflix Player"; 
+		self.canvas.configure(width =44, height =1)
 		self.canvas.grid(row =2,column =0)
 
 	def tracklist_widget(self):
 		self.listtitle =Label(self.tracklist,font =("times new roman",15,"bold"),bg="white", fg ="dodgerblue")
-		self.listtitle['text'] =f"Playlist  {len(self.playlist)}"
+		self.listtitle['text'] =f"Playlist:  {len(self.playlist)} "
 		self.listtitle.configure(width =12, height =1)
 		self.listtitle.grid(row =0,column =0)
 
@@ -138,14 +138,20 @@ class Player(Frame):
 		self.tracklister =Button(self.controls, 
 			font =("times new roman",15,"bold"),
 			bg="white", fg ="dodgerblue",
-			text ="Load tracks",
+			bd =0,
 			command =select_track
 			)
+		self.tracklister['text'] ="Load tracks"
 		self.tracklister.grid(row =0,column =0)
 		
 
+
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
+prev_icon =PhotoImage(file ="ico/prev.gif")
+playpause =PhotoImage(file ="ico/playpause.gif")
+next_icon =PhotoImage(file ="ico/next.gif")
+
 #labels
 """
 Label(master, text="Music Player", font=("Calibri", 15), fg="red").grid(sticky="N", row=0,padx=120)
