@@ -151,7 +151,7 @@ class Player(Frame):
 			if event is not None:
 				self.track_index =self.list.curselection()[0]
 			for i in range(len(self.playlist)):
-				self.list.itemconfigure(i,bg="white")
+				self.list.itemconfigure(i,bg="white",fg="black")
 			mixer.music.load(self.playlist[self.track_index])
 			self.track_paused =False
 			self.track_played =True
@@ -181,7 +181,10 @@ class Player(Frame):
 			except Exception as e:
 				pass
 	def next_track(self):
-		pass
+		if self.track_index > len(self.playlist) -1:
+			self.track_index =0
+		self.track_index +=1
+		self.play_track()
 
 
 #images
