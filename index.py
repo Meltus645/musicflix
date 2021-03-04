@@ -117,10 +117,10 @@ class Player(Frame):
 		self.canvas.configure(width =300, height =240)
 		self.canvas.grid(row =1,column =0)
 
-		self.canvas =Label(self.track,font =("Calibri",13),bg="white", fg ="dodgerblue")
-		self.canvas['text'] ="Musicflix Player"; 
-		self.canvas.configure(width =44, height =1)
-		self.canvas.grid(row =2,column =0)
+		self.playing_tune =Label(self.track,font =("Calibri",13),bg="white", fg ="dodgerblue")
+		self.playing_tune['text'] ="Musiflix MP3 Player"; 
+		self.playing_tune.configure(width =44, height =1)
+		self.playing_tune.grid(row =2,column =0)
 
 	def tracklist_widget(self):
 		self.listtitle =Label(self.tracklist,font =("times new roman",15,"bold"),bg="white", fg ="dodgerblue")
@@ -194,6 +194,8 @@ class Player(Frame):
 		for i in range(len(self.playlist)):
 			self.list.itemconfigure(i,bg="white")
 		mixer.music.load(self.playlist[self.track_index])
+		self.playing_tune.anchor('w')
+		self.playing_tune['text'] =os.path.basename(self.playlist[self.track_index])
 		mixer.music.play()
 
 		"""
