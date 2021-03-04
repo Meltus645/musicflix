@@ -155,7 +155,7 @@ class Player(Frame):
 		self.prevbutton =Button(self.controls,image =prev_icon)
 		self.prevbutton.grid(row =0,column =1,pady =5)
 
-		self.pausebutton =Button(self.controls,image =playicon)
+		self.pausebutton =Button(self.controls,image =pauseicon)
 		self.pausebutton.grid(row =0,column =2,pady =5)
 
 		self.nextbutton =Button(self.controls,image =next_icon)
@@ -175,7 +175,6 @@ class Player(Frame):
 	def select_track(self):
 		self.tunes =[]
 		directory =filedialog.askdirectory()
-
 		for rooot, dirs, files in os.walk(directory):
 			for file in files:
 				if os.path.splitext(file)[1] =='.mp3':
@@ -194,8 +193,11 @@ class Player(Frame):
 		for i in range(len(self.playlist)):
 			self.list.itemconfigure(i,bg="white")
 		mixer.music.load(self.playlist[self.track_index])
+		self.pausebutton['image'] =playicon
 		self.playing_tune.anchor('w')
 		self.playing_tune['text'] =os.path.basename(self.playlist[self.track_index])
+		self.list.activate(self.track_index)
+		self.list.itemconfigure(self.track_index,bg="red")
 		mixer.music.play()
 
 		"""
