@@ -186,6 +186,11 @@ class Player(Frame):
 		self.track_index +=1
 		self.play_track()
 
+	def prev_track(self):
+		if self.track_index < 0:
+			self.track_index =len(self.playlist) -1
+		self.track_index -=1
+		self.play_track()
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
