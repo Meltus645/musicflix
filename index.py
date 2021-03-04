@@ -62,6 +62,12 @@ class Player(Frame):
 				self.playlist =pickle.load(f)
 		else:
 			self.playlist =[]
+
+		# player state flags
+		self.track_index =0
+		self.track_paused =True
+		self.track_played =False
+
 		self.model_frame()
 		self.track_widget()
 		self.tracklist_widget()
