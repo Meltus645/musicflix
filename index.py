@@ -143,13 +143,21 @@ class Player(Frame):
 			)
 		self.tracklister['text'] ="Load tracks"
 		self.tracklister.grid(row =0,column =0)
-		
 
+		self.prevbutton =Button(self.controls,image =prev_icon)
+		self.prevbutton.grid(row =0,column =1)
+
+		self.pausebutton =Button(self.controls,image =playicon)
+		self.pausebutton.grid(row =0,column =2)
+
+		self.nextbutton =Button(self.controls,image =next_icon)
+		self.nextbutton.grid(row =0,column =3)
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
 prev_icon =PhotoImage(file ="ico/prev.gif")
-playpause =PhotoImage(file ="ico/playpause.gif")
+pauseicon =PhotoImage(file ="ico/pause.gif")
+playicon =PhotoImage(file ="ico/play.gif")
 next_icon =PhotoImage(file ="ico/next.gif")
 
 #labels
