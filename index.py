@@ -110,7 +110,7 @@ class Player(Frame):
 		self.tracklister['text'] ="Load tracks"
 		self.tracklister.grid(row =0,column =0,padx=10,pady =5)
 
-		self.prevbutton =Button(self.controls,image =prev_icon)
+		self.prevbutton =Button(self.controls,image =prev_icon, command =self.prev_track)
 		self.prevbutton.grid(row =0,column =1,pady =5)
 
 		self.pausebutton =Button(self.controls,image =pauseicon, command =self.pause_track)
@@ -124,6 +124,7 @@ class Player(Frame):
 		self.slider['variable'] =self.volume
 		self.slider['command'] =self.change_volume
 		self.slider.set(3)
+		mixer.music.set_volume(0.3)
 		self.slider.grid(row =0, column=4,padx=10,pady =5)
 
 	def change_volume(self, event =None):
