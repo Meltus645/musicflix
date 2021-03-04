@@ -4,49 +4,6 @@ from pygame import mixer
 from tkinter import  Tk, Frame,END, LabelFrame, GROOVE,Label,SINGLE, Button, filedialog,PhotoImage,DoubleVar,Listbox, Scale, HORIZONTAL,VERTICAL, Scrollbar
 import pickle
 
-play_volume =float(0.5)
-
-# commands
-
-def volume_down():
-	try:
-		global play_volume
-		if play_volume <=0:
-			volume_label.config(font=("Calibri",12), fg="grey", text="Muted")
-			return
-		play_volume =play_volume -float(0.1)
-		play_volume =round(play_volume,1)
-		mixer.music.set_volume(play_volume)
-		volume_label.config(font=("Calibri",12), fg="green", text=str(play_volume))
-	except Exception as e:
-		song_title.config(fg="red", text="No track selected")
-		print(e)
-
-def volume_up():
-	try:
-		global play_volume
-		if play_volume >=1:
-			volume_label.config(font=("Calibri",12), fg="red", text="Max")
-			return
-		play_volume =play_volume +float(0.1)
-		play_volume =round(play_volume,1)
-		mixer.music.set_volume(play_volume)
-		volume_label.config(font=("Calibri",12), fg="green", text=str(play_volume))
-	except Exception as e:
-		song_title.config(fg="red", text="No track selected")
-		print(e)
-def pause():
-	try:
-		mixer.music.pause()
-	except Exception as e:
-		print(e)
-		song_title.config(fg="red", text="No track selected")
-def resume():
-	try:
-		mixer.music.unpause()
-	except Exception as e:
-		print(e)
-		song_title.config(fg="red", text="No track selected")
 # screen 
 root =Tk()
 root.geometry("600x400")
@@ -56,8 +13,8 @@ class Player(Frame):
 	def __init__(self,master):
 		super().__init__(master)
 		self.master =master
-		self.pack()
 		mixer.init()
+		self.pack()
 		if os.path.exists("tracks.pickle"):
 			with open ("tracks.pickle", "rb") as f:
 				self.playlist =pickle.load(f)
@@ -73,6 +30,7 @@ class Player(Frame):
 		self.track_widget()
 		self.tracklist_widget()
 		self.controls_widget()
+
 	# frames
 	def model_frame(self):
 		self.track =LabelFrame(self,
@@ -155,10 +113,10 @@ class Player(Frame):
 		self.prevbutton =Button(self.controls,image =prev_icon)
 		self.prevbutton.grid(row =0,column =1,pady =5)
 
-		self.pausebutton =Button(self.controls,image =pauseicon)
+		self.pausebutton =Button(self.controls,image =pauseicon, command =self.pause_track)
 		self.pausebutton.grid(row =0,column =2,pady =5)
 
-		self.nextbutton =Button(self.controls,image =next_icon)
+		self.nextbutton =Button(self.controls,image =next_icon, command =self.next_track)
 		self.nextbutton.grid(row =0,column =3,pady =5)
 
 		self.volume =DoubleVar()
@@ -170,6 +128,7 @@ class Player(Frame):
 
 	def change_volume(self, event =None):
 		self.v =self.volume.get()
+		mixer.music.set_volume(self.v/10)
 
 
 	def select_track(self):
@@ -188,35 +147,42 @@ class Player(Frame):
 		self.track_listing()
 
 	def play_track(self, event =None):
-		if event is not None:
-			self.track_index =self.list.curselection()[0]
-		for i in range(len(self.playlist)):
-			self.list.itemconfigure(i,bg="white")
-		mixer.music.load(self.playlist[self.track_index])
-		self.pausebutton['image'] =playicon
-		self.playing_tune.anchor('w')
-		self.playing_tune['text'] =os.path.basename(self.playlist[self.track_index])
-		self.list.activate(self.track_index)
-		self.list.itemconfigure(self.track_index,bg="red")
-		mixer.music.play()
-
-		"""
-		selected_track =filename
-		track_title =filename.split("/")
-		track_title =track_title[-1]
-
 		try:
-			mixer.init()
-			mixer.music.load(selected_track)
-			mixer.music.set_volume(play_volume)
+			if event is not None:
+				self.track_index =self.list.curselection()[0]
+			for i in range(len(self.playlist)):
+				self.list.itemconfigure(i,bg="white")
+			mixer.music.load(self.playlist[self.track_index])
+			self.track_paused =False
+			self.track_played =True
+			self.pausebutton['image'] =playicon
+			self.playing_tune.anchor('w')
+			self.playing_tune['text'] =os.path.basename(self.playlist[self.track_index])
+			self.list.activate(self.track_index)
+			self.list.itemconfigure(self.track_index,bg="teal", fg="white")
 			mixer.music.play()
-			song_title.config(fg="green", text=str(track_title))
-			volume_label.config(fg="green", text=str(play_volume))
-		except Exception as e:
-			print(e)
-			song_title.config(fg="red", text="Error, playing track")
+		except  Exception as e:
 			pass
-			"""
+	def pause_track(self):
+		if not self.track_paused:
+			try:
+				self.track_paused =True
+				self.pausebutton['image'] =pauseicon
+				mixer.music.pause()
+			except Exception as e:
+				pass
+		else:
+			try:
+				if not self.track_played:
+					self.play_track()
+				self.track_paused =False
+				self.pausebutton['image'] =playicon
+				mixer.music.unpause()
+			except Exception as e:
+				pass
+	def next_track(self):
+		pass
+
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
@@ -225,22 +191,6 @@ pauseicon =PhotoImage(file ="ico/pause.gif")
 playicon =PhotoImage(file ="ico/play.gif")
 next_icon =PhotoImage(file ="ico/next.gif")
 
-#labels
-"""
-Label(master, text="Music Player", font=("Calibri", 15), fg="red").grid(sticky="N", row=0,padx=120)
-Label(master, text="Please select a track", font=("Calibri", 12), fg="blue").grid(sticky="N", row=1,padx=120)
-Label(master, text="Volume", font =("Calibri",12),fg="red").grid(sticky="N", row=4)
-song_title =Label(master, font =("Calibri",12))
-song_title.grid(sticky="N", row =3);
-volume_label =Label(master, font =("Calibri",12))
-volume_label.grid(sticky="N", row =5);
 
-#buttons 
-Button(master, text="select song", font=("Calibri",12), command=select_track).grid(sticky="N", row=2)
-Button(master, text="Resume", font=("Calibri",12),command =resume).grid(sticky="W", row=3)
-Button(master, text="Pause", font=("Calibri",12),command =pause).grid(sticky="E", row=3)
-Button(master, text="-", font=("Calibri",12),width=5,command=volume_down).grid(sticky="W", row=5)
-Button(master, text="+", font=("Calibri",12),width=5,command=volume_up).grid(sticky="E", row=5)
-"""
 player =Player(master=root)
 root.mainloop()
