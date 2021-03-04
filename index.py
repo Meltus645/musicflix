@@ -1,7 +1,7 @@
 #libs 
 import os
 from pygame import mixer
-from tkinter import  Tk, Frame, LabelFrame, GROOVE,Label, Button, filedialog,PhotoImage,DoubleVar, Scale, HORIZONTAL
+from tkinter import  Tk, Frame, LabelFrame, GROOVE,Label, Button, filedialog,PhotoImage,DoubleVar, Scale, HORIZONTAL,VERTICAL, Scrollbar
 import pickle
 
 play_volume =float(0.5)
@@ -134,6 +134,9 @@ class Player(Frame):
 		self.listtitle.configure(width =12, height =1)
 		self.listtitle.grid(row =0,column =0)
 
+		self.scrollbar =
+
+
 	def controls_widget(self):
 		self.tracklister =Button(self.controls, 
 			font =("times new roman",15,"bold"),
@@ -161,7 +164,6 @@ class Player(Frame):
 
 	def change_volume(self, event =None):
 		self.v =self.volume.get()
-		print(self.v)
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
