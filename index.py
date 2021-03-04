@@ -57,8 +57,9 @@ class Player(Frame):
 		super().__init__(master)
 		self.master =master
 		self.pack()
+		mixer.init()
 		if os.path.exists("tracks.pickle"):
-			with open ("tracks.pickle", "r") as f:
+			with open ("tracks.pickle", "rb") as f:
 				self.playlist =pickle.load(f)
 		else:
 			self.playlist =[]
