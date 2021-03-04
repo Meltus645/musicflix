@@ -120,7 +120,7 @@ class Player(Frame):
 		self.canvas.grid(row =0,column =0)
 
 		self.canvas =Label(self.track,image=track_ico) 
-		self.canvas.configure(width =400, height =240)
+		self.canvas.configure(width =300, height =240)
 		self.canvas.grid(row =1,column =0)
 
 		self.canvas =Label(self.track,font =("Calibri",13),bg="white", fg ="dodgerblue")
@@ -131,10 +131,12 @@ class Player(Frame):
 	def tracklist_widget(self):
 		self.listtitle =Label(self.tracklist,font =("times new roman",15,"bold"),bg="white", fg ="dodgerblue")
 		self.listtitle['text'] =f"Playlist:  {len(self.playlist)} "
-		self.listtitle.configure(width =12, height =1)
+		self.listtitle.configure(width =10, height =1)
 		self.listtitle.grid(row =0,column =0)
 
-		self.scrollbar =
+		self.scrollbar =Scrollbar(self.tracklist,orient =VERTICAL)
+		self.scrollbar.grid(row=0, column=1,rowspan =5, sticky="NS")
+		
 
 
 	def controls_widget(self):
