@@ -57,7 +57,11 @@ class Player(Frame):
 		super().__init__(master)
 		self.master =master
 		self.pack()
-		self.playlist =[]
+		if os.path.exists("tracks.pickle"):
+			with open ("tracks.picke", "r") as f:
+				self.playlist =pickle.load(f)
+		else:
+			self.playlist =[]
 		self.model_frame()
 		self.track_widget()
 		self.tracklist_widget()
