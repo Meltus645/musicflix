@@ -137,8 +137,7 @@ class Player(Frame):
 	def controls_widget(self):
 		self.tracklister =Button(self.controls, 
 			font =("times new roman",15,"bold"),
-			bg="white", fg ="dodgerblue",
-			bd =0,
+			bg="teal", fg ="white", padx =10, pady =1,
 			command =select_track
 			)
 		self.tracklister['text'] ="Load tracks"
