@@ -137,26 +137,31 @@ class Player(Frame):
 	def controls_widget(self):
 		self.tracklister =Button(self.controls, 
 			font =("times new roman",15,"bold"),
-			bg="white", fg ="dodgerblue", padx =10,
+			bg="white", fg ="dodgerblue", padx =10,pady =5,
 			command =select_track
 			)
 		self.tracklister['text'] ="Load tracks"
-		self.tracklister.grid(row =0,column =0,padx=10)
+		self.tracklister.grid(row =0,column =0,padx=10,pady =5)
 
 		self.prevbutton =Button(self.controls,image =prev_icon)
-		self.prevbutton.grid(row =0,column =1)
+		self.prevbutton.grid(row =0,column =1,pady =5)
 
 		self.pausebutton =Button(self.controls,image =playicon)
-		self.pausebutton.grid(row =0,column =2)
+		self.pausebutton.grid(row =0,column =2,pady =5)
 
 		self.nextbutton =Button(self.controls,image =next_icon)
-		self.nextbutton.grid(row =0,column =3)
+		self.nextbutton.grid(row =0,column =3,pady =5)
 
 		self.volume =DoubleVar()
 		self.slider =Scale(self.controls, from_ =0, to =10, orient =HORIZONTAL)
 		self.slider['variable'] =self.volume
+		self.slider['command'] =self.change_volume
 		self.slider.set(3)
-		self.slider.grid(row =0, column=4,padx=10)
+		self.slider.grid(row =0, column=4,padx=10,pady =5)
+
+	def change_volume(self, event =None):
+		self.v =self.volume.get()
+		print(self.v)
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
