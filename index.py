@@ -76,13 +76,12 @@ class Player(Frame):
 		self.pack()
 		self.playlist =[]
 		self.model_frame()
+		self.track_widget()
+		self.tracklist_widget()
+		self.controls_widget()
+	# frames
 	def model_frame(self):
 		self.track =LabelFrame(self,
-				text ="Track Hits",
-				font =("times new roman",15,"bold"),
-				bg ="white",
-				bd =0,
-				fg ="dodgerblue",
 				relief =GROOVE
 			)
 		self.track.configure(
@@ -92,11 +91,6 @@ class Player(Frame):
 		self.track.grid(row=0, column=0,pady=10,padx=10)
 
 		self.tracklist =LabelFrame(self,
-				text =f"Playlist  {len(self.playlist)}",
-				font =("times new roman",15,"bold"),
-				bd =0,
-				bg ="white",
-				fg ="red",
 				relief =GROOVE
 			)
 		self.tracklist.configure(
@@ -117,6 +111,41 @@ class Player(Frame):
 				height =100
 			)
 		self.controls.grid(row=1, column=0,pady=10,padx=10)
+
+	# widgets
+	def track_widget(self):
+		self.canvas =Label(self.track,font =("times new roman",15,"bold"),bg="white", fg ="dodgerblue")
+		self.canvas['text'] ="Hit tracks"; 
+		self.canvas.configure(width =33, height =1)
+		self.canvas.grid(row =0,column =0)
+
+		self.canvas =Label(self.track,image=track_ico) 
+		self.canvas.configure(width =400, height =240)
+		self.canvas.grid(row =1,column =0)
+
+		self.canvas =Label(self.track,font =("Calibri",12),bg="white", fg ="dodgerblue")
+		self.canvas['text'] ="Musicflix mp3 super Player"; 
+		self.canvas.configure(width =50, height =2)
+		self.canvas.grid(row =2,column =0)
+
+	def tracklist_widget(self):
+		self.listtitle =Label(self.tracklist,font =("times new roman",15,"bold"),bg="white", fg ="dodgerblue")
+		self.listtitle['text'] =f"Playlist  {len(self.playlist)}"
+		self.listtitle.configure(width =12, height =1)
+		self.listtitle.grid(row =0,column =0)
+
+	def controls_widget(self):
+		self.tracklister =Button(self.controls, 
+			font =("times new roman",15,"bold"),
+			bg="white", fg ="dodgerblue",
+			text ="Load tracks",
+			command =select_track
+			)
+		self.tracklister.grid(row =0,column =0)
+		
+
+#images
+track_ico =PhotoImage(file ="ico/headsets.gif")
 #labels
 """
 Label(master, text="Music Player", font=("Calibri", 15), fg="red").grid(sticky="N", row=0,padx=120)
