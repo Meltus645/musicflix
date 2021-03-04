@@ -1,29 +1,12 @@
 #libs 
 import os
 from pygame import mixer
-from tkinter import  Tk, Frame, LabelFrame, GROOVE,Label, Button, filedialog,PhotoImage,DoubleVar, Scale, HORIZONTAL,VERTICAL, Scrollbar
+from tkinter import  Tk, Frame,END, LabelFrame, GROOVE,Label,SINGLE, Button, filedialog,PhotoImage,DoubleVar,Listbox, Scale, HORIZONTAL,VERTICAL, Scrollbar
 import pickle
 
 play_volume =float(0.5)
 
 # commands
-def select_track():
-	filename =filedialog.askopenfilename(initialdir="C:/", title ="Please select a song")
-	selected_track =filename
-	track_title =filename.split("/")
-	track_title =track_title[-1]
-
-	try:
-		mixer.init()
-		mixer.music.load(selected_track)
-		mixer.music.set_volume(play_volume)
-		mixer.music.play()
-		song_title.config(fg="green", text=str(track_title))
-		volume_label.config(fg="green", text=str(play_volume))
-	except Exception as e:
-		print(e)
-		song_title.config(fg="red", text="Error, playing track")
-		pass
 
 def volume_down():
 	try:
@@ -135,15 +118,24 @@ class Player(Frame):
 		self.listtitle.grid(row =0,column =0)
 
 		self.scrollbar =Scrollbar(self.tracklist,orient =VERTICAL)
-		self.scrollbar.grid(row=0, column=1,rowspan =5, sticky="NS")
-		
+		self.scrollbar.grid(row=0, column=1,rowspan =10, sticky="NS")
 
+		self.list =Listbox(self.tracklist, selectmode =SINGLE,
+			yscrollcommand =self.scrollbar.set, selectbackground ="sky blue")
+		self.track_listing()
+		self.list.config(height =22)
+		self.scrollbar.config(command =self.list.yview)
+		self.list.grid(row=2, column=0, rowspan =5)
+
+	def track_listing(self):
+		for index, track in enumerate(self.playlist):
+			self.list.insert(index,os.path.basename(track))
 
 	def controls_widget(self):
 		self.tracklister =Button(self.controls, 
 			font =("times new roman",15,"bold"),
 			bg="white", fg ="dodgerblue", padx =10,pady =5,
-			command =select_track
+			command =self.select_track
 			)
 		self.tracklister['text'] ="Load tracks"
 		self.tracklister.grid(row =0,column =0,padx=10,pady =5)
@@ -166,6 +158,40 @@ class Player(Frame):
 
 	def change_volume(self, event =None):
 		self.v =self.volume.get()
+
+
+	def select_track(self):
+		self.tunes =[]
+		directory =filedialog.askdirectory()
+
+		for rooot, dirs, files in os.walk(directory):
+			for file in files:
+				if os.path.splitext(file)[1] =='.mp3':
+					path =(rooot + '/' + file).replace('\\','/')
+					self.tunes.append(path)
+		with open("activity.pickle", "wb") as f:
+			pickle.dump(self.tunes, f) 
+		self.playlist =self.tunes
+		self.listtitle['text'] =f"Playlist:  {len(self.playlist)}"
+		self.list.delete(0, END)
+		self.track_listing()
+		"""
+		selected_track =filename
+		track_title =filename.split("/")
+		track_title =track_title[-1]
+
+		try:
+			mixer.init()
+			mixer.music.load(selected_track)
+			mixer.music.set_volume(play_volume)
+			mixer.music.play()
+			song_title.config(fg="green", text=str(track_title))
+			volume_label.config(fg="green", text=str(play_volume))
+		except Exception as e:
+			print(e)
+			song_title.config(fg="red", text="Error, playing track")
+			pass
+			"""
 
 #images
 track_ico =PhotoImage(file ="ico/headsets.gif")
